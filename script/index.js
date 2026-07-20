@@ -18,22 +18,29 @@ const displayLevelWord = (words) =>{
     const wordContainer = document.getElementById("word_container");
     wordContainer.innerHTML = "";
 
-    // {
-    //     "id": 80,
-    //     "level": 1,
-    //     "word": "Run",
-    //     "meaning": "দৌড়ানো",
-    //     "pronunciation": "রান"
-    // }
+    if(words.length == 0){
+        // alert("No word detected");
+        wordContainer.innerHTML = `
+                <div class="text-center col-span-full space-y-6 py-10 font_bangla">
+                <img class="mx-auto" src="./assets/alert-error.png"  alt="">
+            <p class="text-xl font-medium text-gray-500">
+                এই Lesson এ এখনো কোন Vocabulary যুক্ত করা হয়নি।
+            </p>
+            <p class="text-5xl font-bold text-gray-600">
+                নেক্সট Lesson এ যান
+            </p>
+        </div>
+        `;
+        return;
+    }
 
 words.forEach(word => {
-    console.log(word)
     const card = document.createElement("div");
     card.innerHTML = `
             <div class="bg-white rounded-xl shadow-2xl text-center py-7 px-5 space-y-5">
-            <h2 class="font-bold text-2xl">${word.word}</h2>
+            <h2 class="font-bold text-2xl">${word.word ? word.word : "দুঃখিত! কোনো Vocabulary পাওয়া যায়নি।"}</h2>
             <p class="font-semibold ">Meaning/ Pronunciation</p>
-            <div class="text-2xl font-medium font_bangla">${word.meaning} / ${word.pronunciation}</div>
+            <div class="text-2xl font-medium font_bangla">${word.meaning ? word.meaning : "দুঃখিত! কোনো Meaning পাওয়া যায়নি"}  / ${word.pronunciation ? word.pronunciation : "দুঃখিত! কোনো Meaning পাওয়া যায়নি"}</div>
             <div class="flex justify-between items-center">
                 <button class="btn bg-[#1A91FF30] hover:bg-[#1A91FF80]"><i class="fa-solid fa-circle-info"></i></button>
                 <button class="btn bg-[#1A91FF30] hover:bg-[#1A91FF80]"><i class="fa-solid fa-volume-high"></i></button>
@@ -62,9 +69,11 @@ words.forEach(word => {
     `;
 // 4. append into container
 levelContainer.append(btnDiv)
+
 }
 
 }
+
 loadLessons();
 
 
